@@ -2,48 +2,48 @@
 
 ## Présentation
 
-Ce plugin Jeedom `hyundaibluelink` permet d'obtenir les valeurs d'un (ou plusieurs) véhicules de la marque Hyundai compatible  avec le système [Bluelink](https://www.kia.com/fr/service/uvo-connect/). Il permet aussi de piloter quelques action simples.
+Ce plugin Jeedom `hyundaibluelink` permet d'obtenir les valeurs d'un (ou plusieurs) véhicules de la marque Hyundai compatible  avec le système [Bluelink](https://www.hyundai.fr/services/connectivite). Il permet aussi de piloter quelques action simples.
 
 ## Avertissement
 
-- Il utilise la librairie `kuvork` sous le capot, tous les problèmes liés à cette bibliothèque ne seront pas gérés ici,
-- Les actions sont gérées par UVO et peuvent prendre un certain temps à s'appliquer à la voiture,
+- Il utilise la librairie `bluekinky` sous le capot, tous les problèmes liés à cette bibliothèque ne seront pas gérés ici,
+- Les actions sont gérées par Bluelink et peuvent prendre un certain temps à s'appliquer à la voiture,
 - :warning: lorsque vous chargez les données directement depuis le véhicule (`rafraîchir depuis le véhicule`) ce dernier sort de son cycle de veille pendant quelques minutes (d'après mes tests 3 minutes) en utilisant la batterie 12V. Un abus de cette fonctionnalité est capable de décharger votre batterie. A utiliser donc sans abus et à vos risques et périls ! Ce problème est aussi remonté sur le plugin équivalent pour [Homey](https://github.com/gruijter/com.gruijter.hyundai_kia#how-to-get-live-status-updates).
-- Les serveurs UVO utilisés par cette application limitent le nombre de requêtes par heure à 100. Cette limitation semble être définie par adresse IP.
+- Les serveurs Bluelink utilisés par cette application limitent le nombre de requêtes par heure à 100. Cette limitation semble être définie par adresse IP.
 
 
 ## Installation
 
 Après le téléchargement du plugin, rendez vous sur sa page de configuration et activez le.
 
-![Activation du plugin kia-uvo](./medias/install-enable.png)
+![Activation du plugin bluelink](./medias/install-enable.png)
 
-Par suite assurez vous que les dépendances soit bien installés. Elles sont nécessaire pour le démarage du demon `UVO`. Si le statut est `NOK`, pensez à relancer l'installation. 
+Par suite assurez vous que les dépendances soit bien installés. Elles sont nécessaire pour le démarage du demon `Bluelink`. Si le statut est `NOK`, pensez à relancer l'installation. 
 
 > En fonction de votre environnement et de votre connexion internet, ceci prendra de quelques secondes à une dixaine minutes (Raspberry 3 et ADSL 3Mb/s).
 
-![Dépendances du plugin kia-uvo](./medias/install-deps.png)
+![Dépendances du plugin bluelink](./medias/install-deps.png)
 
 ## Configuration
 
-Pour cette partie vous devez déjà avoir connecté et configurer votre véhicule à l'application UVO. Pour celà reportez vous au manuel du constructeur [disponnible ici](http://webmanual.kia.com/STD_GEN5_WIDE/AVNT/EU/French/beforeusinguvoeservices.html).
+Pour cette partie vous devez déjà avoir connecté et configurer votre véhicule à l'application Bluelink. Pour celà reportez vous au manuel du constructeur [disponnible ici](http://webmanual.hyundai.com/DA_GEN2_V/AV/USA/French/009_BlueLink_service.html).
 
 Dans la configuration du plugin, entrez les informations nécessaire au forctionnement du plugin: 
 
-- Utilisateur : Le nom de l'utilisateur de UVO
-- Mot de passe : Le mot de passe UVO
+- Utilisateur : Le nom de l'utilisateur de Bluelink
+- Mot de passe : Le mot de passe Bluelink
 - Région : La région dans laquelle se trouve votre véhicule
 - Pin : Le code de sécurité de votre véhicule
 
-> Ces informations sont stoqués sur votre Jeedom et sont exclusivement utilisés par le demon UVO dans le cadre de ses interactions avec le system UVO et le véhicule.
+> Ces informations sont stoqués sur votre Jeedom et sont exclusivement utilisés par le demon Bluelink dans le cadre de ses interactions avec le system Bluelink et le véhicule.
 
 Une fois configuré, cliquez sur `sauvegarder`.
 
-![config du plugin kia-uvo](./medias/config-conf.png)
+![config du plugin Bluelink](./medias/config-conf.png)
 
 Finalement, assurez vous que le demon démare bien. Cliquez sur le bouton `(Re)Démarer` et assurez vous que le statut soit sur `OK`. Il est aussi fortement recommandé d'activer la `Gestion automatique` ; elle permet à Jeedom de lancer automatiquement le démon au démarrage de Jeedom, ainsi que de le relancer en cas de problème.
 
-![demon du plugin kia-uvo](./medias/install-demon.png)
+![demon du plugin Bluelink](./medias/install-demon.png)
 
 ## Configuration des véhicules
 
@@ -57,7 +57,7 @@ Cliquez sur ajouter et donez un nom a votre véhicule. Vous serez redirigez vers
 
 ### Option du véhicule
 
-Commencez par choisir votre véhicle (`Identifiant véhicule`) parmis la liste de ceux proposés. Cette liste reprend les véhicules référencés sur votre compte UVO.
+Commencez par choisir votre véhicle (`Identifiant véhicule`) parmis la liste de ceux proposés. Cette liste reprend les véhicules référencés sur votre compte Bluelink.
 
 Le paramère `Source d'énergie` vous permet de choisir le type de motorisation de votre véhicule. En fonction de ce choix, les widgets auront une apparence différente (affichage de la batterie pour les véhicules électriques par exemple).
 
@@ -68,7 +68,7 @@ Le paramère `Capacité de la batterie` n'est pas encore utilisé à ce jour.
 
 Pour désactiver un des rafraichissements, vous pouvez définir l'option en question à `0`.
 
-Le paramère `Fréquence de mise à jour depuis UVO` vous permet de définir à quel rythme Jeedom lis les information du véhicule depuis le service UVO.
+Le paramère `Fréquence de mise à jour depuis Bluelink` vous permet de définir à quel rythme Jeedom lis les information du véhicule depuis le service Bluelink.
 
 Le paramère `Fréquence de mise à jour depuis le véhicule` vous permet de définir à quel rythme Jeedom lis les informations depuis le véhicule.
 
@@ -76,7 +76,7 @@ Le paramère `Fréquence de mise à jour de l'odomètre` vous permet de définir
 
 Le paramère `Fréquence de mise à jour de la position` vous permet de définir à quel rythme Jeedom lis les informations de localisation du véhicule.
 
-> NB: pour cela le plugin ne contacte pas le véhicule mais le système UVO. Cela permet entre autre de ne pas user la batterie 12V du véhicule. Quand il roule, le véhicule dois envoyer de lui même régulièrement des informations au système UVO.
+> NB: pour cela le plugin ne contacte pas le véhicule mais le système Bluelink. Cela permet entre autre de ne pas user la batterie 12V du véhicule. Quand il roule, le véhicule dois envoyer de lui même régulièrement des informations au système Bluelink.
 
 ## Options de préchauffage
 
@@ -134,7 +134,7 @@ Noubliez pas de sauvegarder vos modifications.
 - `témoin pression pneu avant gauche` : Idem avant gauche
 - `témoin pression pneu arrière droit` : Idem arrière droit
 - `témoin pression pneu arrière gauche` : Idem arrière gauche
-- `tous les témoins de pression pneu` : Si tous les temoins de pression sont allumés (UVO précise cette valeur)
+- `tous les témoins de pression pneu` : Si tous les temoins de pression sont allumés (Bluelink précise cette valeur)
 - `odomètre` : Le nombre de kilomètres parcouru par le véhicule
 
 ## Actions
@@ -145,7 +145,7 @@ Noubliez pas de sauvegarder vos modifications.
 - `déverrouiller` : Déverrouiller les portes
 - `desactiver le préchauffage` : Arréter le préchauffage
 - `activer le préchauffage` : Lancer le préchauffage du véhicule
-- `rafraîchir depuis UVO` : Rafraichir les données depuis le système UVO
+- `rafraîchir depuis Bluelink` : Rafraichir les données depuis le système Bluelink
 - `rafraîchir depuis le véhicule` : Rafraichir les données depuis le véhicule (:warning: tire sur la batterie 12V)
 - `rafraîchir la position` : Rafraichir les données de localisation du véhicule (:warning: tire sur la batterie 12V)
 - `rafraîchir l'odomètre` : Rafraichir les données de l'odomètre (:warning: tire sur la batterie 12V)
