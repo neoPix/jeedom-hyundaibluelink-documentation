@@ -1,15 +1,34 @@
-# Changelog Hyunday-Bluelink
+# Changelog Hyundai Bluelink
 
 >**IMPORTANT**
 >
 > S'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
+
+## V1.2.2
+
+### Fonctionnalités
+
+- Possibilité de configurer la langue dans les option du plugin
+- Possibiliter de voir et modifier les limites de charge
+- Amélioration du widget
+
+## V1.2.1
+
+### Documentation
+
+- Amélioration de la documentation sur les problèmes d'authentification
+
+## V1.2.0
+
+### Fonctionnalités
+
+- Possibilité de régler les options de conditionnement du véhicule
 
 ## V1.1.0
 
 ### Fonctionnalités
 
 - Ajout du mode live
-
 
 ## V1.0.0
 

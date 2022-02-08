@@ -1,4 +1,4 @@
-## Hyunday Bluelink Jeedom plugin
+## Hyundai Bluelink Jeedom plugin
 
 - Documentation [en français](./fr_FR/index.md)
 

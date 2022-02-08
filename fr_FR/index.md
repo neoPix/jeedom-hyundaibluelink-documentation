@@ -1,12 +1,12 @@
-# Plugin Hyunday-Bluelink
+# Plugin Hyundai Bluelink
 
 ## Présentation
 
-Ce plugin Jeedom `hyundaibluelink` permet d'obtenir les valeurs d'un (ou plusieurs) véhicules de la marque Hyundai compatible  avec le système [Bluelink](https://www.hyundai.fr/services/connectivite). Il permet aussi de piloter quelques action simples.
+Ce plugin Jeedom `hyundaibluelink` permet d'obtenir les valeurs d'un (ou plusieurs) véhicules de la marque Kia compatible  avec le système [Bluelink](https://www.kia.com/fr/service/uvo-connect/). Il permet aussi de piloter quelques action simples.
 
 ## Avertissement
 
-- Il utilise la librairie `bluekinky` sous le capot, tous les problèmes liés à cette bibliothèque ne seront pas gérés ici,
+- Il utilise la librairie `kuvork` sous le capot, tous les problèmes liés à cette bibliothèque ne seront pas gérés ici,
 - Les actions sont gérées par Bluelink et peuvent prendre un certain temps à s'appliquer à la voiture,
 - :warning: lorsque vous chargez les données directement depuis le véhicule (`rafraîchir depuis le véhicule`) ce dernier sort de son cycle de veille pendant quelques minutes (d'après mes tests 3 minutes) en utilisant la batterie 12V. Un abus de cette fonctionnalité est capable de décharger votre batterie. A utiliser donc sans abus et à vos risques et périls ! Ce problème est aussi remonté sur le plugin équivalent pour [Homey](https://github.com/gruijter/com.gruijter.hyundai_kia#how-to-get-live-status-updates).
 - Les serveurs Bluelink utilisés par cette application limitent le nombre de requêtes par heure à 100. Cette limitation semble être définie par adresse IP.
@@ -16,34 +16,36 @@ Ce plugin Jeedom `hyundaibluelink` permet d'obtenir les valeurs d'un (ou plusieu
 
 Après le téléchargement du plugin, rendez vous sur sa page de configuration et activez le.
 
-![Activation du plugin bluelink](./medias/install-enable.png)
+![Activation du plugin hyundai-bluelink](./medias/install-enable.png)
 
-Par suite assurez vous que les dépendances soit bien installés. Elles sont nécessaire pour le démarage du demon `Bluelink`. Si le statut est `NOK`, pensez à relancer l'installation. 
+Par suite assurez vous que les dépendances soit bien installés. Elles sont nécessaire pour le démarrage du demon `Bluelink`. Si le statut est `NOK`, pensez à relancer l'installation. 
 
 > En fonction de votre environnement et de votre connexion internet, ceci prendra de quelques secondes à une dixaine minutes (Raspberry 3 et ADSL 3Mb/s).
 
-![Dépendances du plugin bluelink](./medias/install-deps.png)
+![Dépendances du plugin hyundai-bluelink](./medias/install-deps.png)
 
 ## Configuration
 
-Pour cette partie vous devez déjà avoir connecté et configurer votre véhicule à l'application Bluelink. Pour celà reportez vous au manuel du constructeur [disponnible ici](http://webmanual.hyundai.com/DA_GEN2_V/AV/USA/French/009_BlueLink_service.html).
+Pour cette partie vous devez déjà avoir connecté et configurer votre véhicule à l'application Bluelink. Pour celà reportez vous au manuel du constructeur [disponnible ici](http://webmanual.kia.com/STD_GEN5_WIDE/AVNT/EU/French/beforeusinguvoeservices.html).
 
 Dans la configuration du plugin, entrez les informations nécessaire au forctionnement du plugin: 
 
-- Utilisateur : Le l'**email** de l'utilisateur de Bluelink
+- Utilisateur : L'**email** de l'utilisateur de Bluelink
 - Mot de passe : Le **mot de passe** Bluelink
 - Région : La région dans laquelle se trouve votre véhicule
+- Langue : La langue de votre application Bluelink (uniquement en europe)
 - Pin : Le **code de sécurité** de votre véhicule
+- Port : Le port applicatif du démon **réservé aux utilisateur avancés**)
 
 > Ces informations sont stoqués sur votre Jeedom et sont exclusivement utilisés par le demon Bluelink dans le cadre de ses interactions avec le system Bluelink et le véhicule.
 
 Une fois configuré, cliquez sur `sauvegarder`.
 
-![config du plugin Bluelink](./medias/config-conf.png)
+![config du plugin hyundai-bluelink](./medias/config-conf.png)
 
 Finalement, assurez vous que le demon démare bien. Cliquez sur le bouton `(Re)Démarer` et assurez vous que le statut soit sur `OK`. Il est aussi fortement recommandé d'activer la `Gestion automatique` ; elle permet à Jeedom de lancer automatiquement le démon au démarrage de Jeedom, ainsi que de le relancer en cas de problème.
 
-![demon du plugin Bluelink](./medias/install-demon.png)
+![demon du plugin hyundai-bluelink](./medias/install-demon.png)
 
 ## Configuration des véhicules
 
@@ -81,10 +83,6 @@ Le paramère `Fréquence de mise en mode live` vous permet de définir à quel r
 
 > NB: pour cela le plugin ne contacte pas le véhicule mais le système Bluelink. Cela permet entre autre de ne pas user la batterie 12V du véhicule. Quand il roule, le véhicule dois envoyer de lui même régulièrement des informations au système Bluelink.
 
-## Options de préchauffage
-
-Vous pouvez ensuite définir les options de préchauffage du véhicule. Il s'agit des options qui seront appliqués quand vous lancerez le préchauffage de votre véhicule.
-
 Noubliez pas de sauvegarder vos modifications.
 
 > C'est au moment de la sauvegarde que les commandes sont crées.
@@ -101,12 +99,14 @@ Noubliez pas de sauvegarder vos modifications.
 
 ### Moteur
 
-- `charge batterie principale`: Niveau de charge de la batterie principale (pour les véhicules à énergie electriques)
+- `charge batterie principale`: Niveau de charge de la batterie principale (pour les véhicules à énergie electrique)
 - `charge batterie secondaire` : Niveau de charge de la batterie 12V
-- `en charge` : Si le véhicule est en charge (pour les véhicules à énergie electriques)
+- `en charge` : Si le véhicule est en charge (pour les véhicules à énergie electrique)
 - `régulateur de vitesse adaptatif` : Si le système de régulation de vitesse adaptatif est en marche
-- `branchée` : Le véhicule est-il branché (pour les véhicules à énergie electriques)
-- `branché à` : A quoi le véhicule est il branché (pour les véhicules à énergie electriques)
+- `branchée` : Le véhicule est-il branché (pour les véhicules à énergie electrique)
+- `branché à` : A quoi le véhicule est il branché (pour les véhicules à énergie electrique)
+- `limite de charge` : La limite de charge du véhicule pour une charge standard (pour les véhicules à énergie electrique)
+- `limite de charge rapide` : La limite de charge du véhicule pour une charge rapide (pour les véhicules à énergie electrique)
 - `temps estimé de charge` : Temps de charge estimé pour la charge en cours
 - `temps estimé de charge rapide` : Temps de charge sur une borne de charge rapide
 - `temps estimé de charge portable` : Temps de charge sur le sytème de charge 220V
@@ -114,6 +114,7 @@ Noubliez pas de sauvegarder vos modifications.
 - `portée totale` : Distance totale que le véhicule peut parcourir
 - `portée électrique` : Distance que le véhicule peut parcourir sur sa batterie
 - `portée carburant` : Distance que le véhicule peut parcourir avec son niveau de carburant
+- `sur la route` : Le moteur est-il démaré
 
 ### Chauffage
 
@@ -123,6 +124,9 @@ Noubliez pas de sauvegarder vos modifications.
 - `dégivrage vitre arrière` : Si le dégivrage de la vitre arrière est actif
 - `dégivrage vitre avant` : SI le dégivrage / désembuage de la vitre avant est actif
 - `temperatureSetpoint` : La température définie dans l'habitacle
+- `consigne température` : La température de consigne pour le conditiennement du véhicule
+- `consigne dégivrage` : La consigne de dégivrage pour le conditionnement du véhicule
+- `consigne chauffage` : La consigne de chauffage pour le conditionnement du véhicule
 
 ### Chassis
 
@@ -152,6 +156,13 @@ Noubliez pas de sauvegarder vos modifications.
 - `rafraîchir depuis le véhicule` : Rafraichir les données depuis le véhicule (:warning: tire sur la batterie 12V)
 - `rafraîchir la position` : Rafraichir les données de localisation du véhicule (:warning: tire sur la batterie 12V)
 - `rafraîchir l'odomètre` : Rafraichir les données de l'odomètre (:warning: tire sur la batterie 12V)
+- `activer le mode live` : Activer la remonté d'informations en live
+- `désactiver le mode live` : Arréter la remontée live d'informations
+- `définir consigne température` : Définir la température de consigne (un chiffre en °C entre 14 et 30)
+- `définir consigne dégivrage` : Définir la consigne de dégivrage (0 ou 1)
+- `définir consigne chauffage` : Définir la consigne de chauffage (0 ou 1)
+- `définir la limite de charge rapide` : Définir la limite de charge rapide (50, 60, 70, 80 ou 100%)
+- `définir la limite de charge` : Définir la limite de charge standard (50, 60, 70, 80 ou 100%)
 
 ## Widget
 
@@ -171,6 +182,14 @@ Voici un exemple ou:
 - La charge est en cours
 
 ![widget](./medias/widget-vehicle-act.png)
+
+## Scénario de préchauffage
+
+Si vous partez a heure fixe, vous pouvez utiliser le plugin Agenda pour pré-conditionner votre véhicule. Afin que la température y soit a votre goût, en été comme en hiver, configurez un scénario comme suit.
+
+Définissez avnt tout vos consignes, puis lancez la chauffe.
+
+![conditionning scenario sample](./medias/scenario-conditionning.png)
 
 ## Mode live
 
@@ -194,7 +213,7 @@ Il existe plusieurs applications qui peuvent faire cela. Pour Android, regardez 
 
 #### iOS
 
-Pour iOS, regardez au niveau de [Shortcuts](https://apps.apple.com/app/id915249334). Créez un `Shortcut` qui détecte l'état du Bluetooth et qui appel les urls fournis dans l'onglet `Live` de la configuration de votre véhicule, ou, adaptez ce [flux plus complexe](./medias/Jeedom+kiauvo+Bluetooth+live.png).
+Pour iOS, regardez au niveau de [Shortcuts](https://apps.apple.com/app/id915249334). Créez un `Shortcut` qui détecte l'état du Bluetooth et qui appel les urls fournis dans l'onglet `Live` de la configuration de votre véhicule, ou, adaptez ce [flux plus complexe](./medias/Jeedom+hyundaibluelink+Bluetooth+live.png).
 
 ## Problèmes
 
@@ -206,10 +225,14 @@ Si le texte `'Deamon hyundaibluelink_node started'` n'y apparaît pas, c'est que
 
 Deux messages d'erreurs sont alors possibles : 
 
-`Bad credentials! Could not connect to UVO with user/password` => le nom d'utilisateur ou le mot de passe sont mal configurés.
+`Bad credentials! Could not connect to Bluelink with user/password` => le nom d'utilisateur ou le mot de passe sont mal configurés.
 `Bad credentials! Could not connect to vehicle with pin` => la valeur du code pin n'est pas correcte.
 
 Assurez vous que l'email de l'utilisateur ainsi que son mot de passe sont correctement renseignés et que le code pin est le bon.
+
+Si le problème persiste, il est possible que le problème soit lié à l'authentification avec les serveurs Bluelink. Commencez par vous assurer que vous arrivez bien à vous connecter à cette url : [Login CCAPi KIA](https://prd.eu-ccapi.kia.com:8080/api/v1/user/oauth2/authorize?response_type=code&state=test&client_id=fdc85c00-0a2f-4c64-bcb4-2cfb1500730a&redirect_uri=https://prd.eu-ccapi.kia.com:8080/api/v1/user/oauth2/redirect). Si ce n'est pas le cas une procédure pour activer ou réactiver le compte vous sera proposé. Si vous arrivez sur une page blanche, c'est que vos identifiants sont les bons.
+
+Redémarrez ensuite le démon.
 
 ### La position de mon véhicule est NaN, NaN
 
